@@ -61,10 +61,8 @@ import ProductList from './components/ProductList.vue';
 export default {
   name: 'App',
   components: { ProductList },
-  data() {
-    return {
+  data: {
       products,
-    };
   },
 };
 </script>
