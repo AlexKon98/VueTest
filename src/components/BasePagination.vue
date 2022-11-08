@@ -1,7 +1,8 @@
+<!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
 <template>
    <ul class="catalog__pagination pagination">
       <li class="pagination__item">
-        <a @click.prevent="pageDown()"
+        <a @click.prevent="pageDown(pageNum)" href="#"
         class="pagination__link pagination__link--arrow pagination__link--disabled"
         aria-label="Предыдущая страница">
           <svg width="8" height="14" fill="currentColor">
@@ -16,7 +17,7 @@
         </a>
       </li>
       <li class="pagination__item">
-        <a @click.prevent="pageUp()"
+        <a @click.prevent="pageUp(pageNum)"
         class="pagination__link pagination__link--arrow" href="#"
         aria-label="Следующая страница">
           <svg width="8" height="14" fill="currentColor">
@@ -29,6 +30,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      pageNum: 1,
+    };
+  },
   model: {
     prop: 'page',
     event: 'paginate',
@@ -43,15 +49,19 @@ export default {
     paginate(page) {
       this.$emit('paginate', page);
     },
-    pageUp() {
-      if (this.page < this.pages) {
-        this.page + 1;
+    pageUp(num) {
+      if (num < this.pages) {
+        num + 1;
+        this.page = num;
       }
+      return this.page;
     },
-    pageDown() {
-      if (this.page > 1) {
-        this.page - 1;
+    pageDown(num) {
+      if (num > 1) {
+        num - 1;
+        this.page = num;
       }
+      return this.page;
     },
   },
 };
