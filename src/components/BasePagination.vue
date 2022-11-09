@@ -38,7 +38,7 @@ export default {
     prop: 'page',
     event: 'paginate',
   },
-  props: ['page', 'count', 'perPage', 'pageUp', 'pageDown'],
+  props: ['page', 'count', 'perPage'],
   computed: {
     pages() {
       return Math.ceil(this.count / this.perPage);
@@ -49,10 +49,14 @@ export default {
       this.$emit('paginate', page);
     },
     pageUp(page) {
-      this.$emit('paginate', page + 1);
+      if (page < Math.ceil(this.count / this.perPage)) {
+        this.$emit('paginate', page + 1);
+      }
     },
     pageDown(page) {
-      this.$emit('paginate', page - 1);
+      if (page > 1) {
+        this.$emit('paginate', page - 1);
+      }
     },
   },
 };
