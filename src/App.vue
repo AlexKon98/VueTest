@@ -18,17 +18,17 @@ export default {
   components: { ProductList, BasePaginationVue },
   data() {
     return {
-      page: 1,
+      page: 1, // 1
       productsPerPage: 3,
     };
   },
   computed: {
     products() {
       const offset = (this.page - 1) * this.productsPerPage;
-      return products.slice(offset, offset + this.productsPerPage);
+      return products.slice(offset, offset + this.productsPerPage); // 3
     },
     countProducts() {
-      return products.length;
+      return products.length; // 12
     },
   },
 };

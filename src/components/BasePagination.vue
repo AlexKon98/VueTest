@@ -2,9 +2,10 @@
 <template>
    <ul class="catalog__pagination pagination">
       <li class="pagination__item">
-        <a @click.prevent="pageDown(pageNum)" href="#"
-        class="pagination__link pagination__link--arrow pagination__link--disabled"
-        aria-label="Предыдущая страница">
+        <a @click.prevent="pageMinus(page)"
+        class="pagination__link pagination__link--arrow"
+        :class="{'pagination__link--disabled': page === 1}"
+        aria-label="Предыдущая страница" href="#">
           <svg width="8" height="14" fill="currentColor">
             <use xlink:href="#icon-arrow-left"></use>
           </svg>
@@ -17,9 +18,9 @@
         </a>
       </li>
       <li class="pagination__item">
-        <a @click.prevent="pageUp(pageNum)"
-        class="pagination__link pagination__link--arrow" href="#"
-        aria-label="Следующая страница">
+        <a @click.prevent="pagePlus(page)" class="pagination__link pagination__link--arrow"
+        :class="{'pagination__link--disabled': page === Math.ceil(this.count / this.perPage)}"
+        aria-label="Следующая страница" href="#">
           <svg width="8" height="14" fill="currentColor">
             <use xlink:href="#icon-arrow-right"></use>
           </svg>
@@ -30,16 +31,11 @@
 
 <script>
 export default {
-  data() {
-    return {
-      pageNum: 1,
-    };
-  },
   model: {
     prop: 'page',
     event: 'paginate',
   },
-  props: ['page', 'count', 'perPage'],
+  props: ['page', 'count', 'perPage', 'pageUp', 'pageDown'],
   computed: {
     pages() {
       return Math.ceil(this.count / this.perPage);
@@ -49,19 +45,11 @@ export default {
     paginate(page) {
       this.$emit('paginate', page);
     },
-    pageUp(num) {
-      if (num < this.pages) {
-        num + 1;
-        this.page = num;
-      }
-      return this.page;
+    pagePlus(page) {
+      this.$emit('paginate', page + 1);
     },
-    pageDown(num) {
-      if (num > 1) {
-        num - 1;
-        this.page = num;
-      }
-      return this.page;
+    pageMinus(page) {
+      this.$emit('paginate', page - 1);
     },
   },
 };
