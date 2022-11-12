@@ -16,27 +16,36 @@
 
       <ul class="colors colors--black">
         <li class="colors__item">
-          <label class="colors__label" :for="product.id+'_'+'blue'">
-            <input class="colors__radio sr-only" :id="product.id+'_'+'blue'"
-            type="radio" name="color-1"
-            value="#73B6EA">
-            <span class="colors__value" style="background-color: #73B6EA;">
+          <label class="colors__label"
+          :for="product.id+'_'+'blue'">
+            <input class="colors__radio sr-only"
+            :id="product.id+'_'+'blue'"
+            type="radio"
+            value="#73B6EA" v-model="color">
+            <span class="colors__value"
+            style="background-color: #73B6EA;">
             </span>
           </label>
         </li>
         <li class="colors__item">
-          <label class="colors__label" :for="product.id+'_'+'green'">
-            <input class="colors__radio sr-only" :id="product.id+'_'+'green'"
-            type="radio" name="color-1" value="#8BE000">
-            <span class="colors__value" style="background-color: #8BE000;">
+          <label class="colors__label"
+          :for="product.id+'_'+'green'">
+            <input class="colors__radio sr-only"
+            :id="product.id+'_'+'green'"
+            type="radio" value="#8BE000" v-model="color">
+            <span class="colors__value"
+            style="background-color: #8BE000;">
             </span>
           </label>
         </li>
         <li class="colors__item">
-          <label class="colors__label" :for="product.id+'_'+'black'">
-            <input class="colors__radio sr-only" :id="product.id+'_'+'black'"
-            type="radio" name="color-1" value="#222">
-            <span class="colors__value" style="background-color: #222;">
+          <label class="colors__label"
+          :for="product.id+'_'+'black'">
+            <input class="colors__radio sr-only"
+            :id="product.id+'_'+'black'"
+            type="radio" value="#222" v-model="color">
+            <span class="colors__value"
+            style="background-color: #222;">
             </span>
           </label>
         </li>
@@ -46,6 +55,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      color: '#73B6EA',
+    };
+  },
   props: ['product'],
 };
 </script>
