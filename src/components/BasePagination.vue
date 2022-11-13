@@ -13,8 +13,8 @@
       </li>
       <li class="pagination__item"
       v-for="pageNumber in pages" :key="pageNumber">
-        <a href="#"
-        @click.prevent="paginate(pageNumber)" class="pagination__link"
+        <a @click.prevent="paginate(pageNumber)" class="pagination__link"
+        href="#"
         :class="{'pagination__link--current': pageNumber === page}">
           {{ pageNumber }}
         </a>
@@ -22,7 +22,7 @@
       <li class="pagination__item">
         <a @click.prevent="pageUp(page)"
         class="pagination__link pagination__link--arrow"
-        :class="{'pagination__link--disabled': page === Math.ceil(this.count / this.perPage)}"
+        :class="{'pagination__link--disabled': page === pages}"
         aria-label="Следующая страница" href="#">
           <svg width="8" height="14" fill="currentColor">
             <use xlink:href="#icon-arrow-right"></use>
