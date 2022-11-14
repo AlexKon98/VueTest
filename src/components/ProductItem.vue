@@ -1,65 +1,31 @@
 <template>
-    <div>
-      <a class="catalog__pic" href="#">
-        <img :src="product.image" :alt="product.title">
+
+  <div>
+    <a class="catalog__pic" href="#">
+      <img :src="product.image" :alt="product.title">
+    </a>
+
+    <h3 class="catalog__title">
+      <a href="#">
+        {{ product.title }}
       </a>
+    </h3>
 
-      <h3 class="catalog__title">
-        <a href="#">
-          {{ product.title }}
-        </a>
-      </h3>
+    <span class="catalog__price">
+      {{ product.price + '₽' }}
+    </span>
 
-      <span class="catalog__price">
-        {{ product.price + '₽' }}
-      </span>
+    <ColorsList :product="product" />
 
-      <ul class="colors colors--black">
-        <li class="colors__item">
-          <label class="colors__label"
-          :for="product.id+'_'+'blue'">
-            <input class="colors__radio sr-only"
-            :id="product.id+'_'+'blue'"
-            type="radio"
-            value="#73B6EA" v-model="color">
-            <span class="colors__value"
-            style="background-color: #73B6EA;">
-            </span>
-          </label>
-        </li>
-        <li class="colors__item">
-          <label class="colors__label"
-          :for="product.id+'_'+'green'">
-            <input class="colors__radio sr-only"
-            :id="product.id+'_'+'green'"
-            type="radio" value="#8BE000" v-model="color">
-            <span class="colors__value"
-            style="background-color: #8BE000;">
-            </span>
-          </label>
-        </li>
-        <li class="colors__item">
-          <label class="colors__label"
-          :for="product.id+'_'+'black'">
-            <input class="colors__radio sr-only"
-            :id="product.id+'_'+'black'"
-            type="radio" value="#222" v-model="color">
-            <span class="colors__value"
-            style="background-color: #222;">
-            </span>
-          </label>
-        </li>
-      </ul>
-    </div>
+  </div>
+
 </template>
 
 <script>
+import ColorsList from './ColorsList.vue';
+
 export default {
-  data() {
-    return {
-      color: '#73B6EA',
-    };
-  },
+  components: { ColorsList },
   props: ['product'],
 };
 </script>
