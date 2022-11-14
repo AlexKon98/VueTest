@@ -11,11 +11,11 @@
         <legend class="form__legend">Цена</legend>
 
         <label class="form__label form__label--price" for="price-first">
-          <input class="form__input" id="price-first" type="text" name="min-price" v-model.number="currentPriceFrom">
+          <input class="form__input" id="price-first" type="number" name="min-price" v-model.number="currentPriceFrom">
           <span class="form__value">От</span>
         </label>
         <label class="form__label form__label--price" for="price-last">
-          <input class="form__input" id="price-last" type="text" name="max-price" placeholder="12345" v-model.number="currentPriceTo">
+          <input class="form__input" id="price-last" type="number" name="max-price" placeholder="12345" v-model.number="currentPriceTo">
           <span class="form__value">До</span>
         </label>
 
