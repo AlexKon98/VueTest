@@ -203,6 +203,7 @@ export default {
       this.$emit('update:priceTo', this.currentPriceTo);
       this.$emit('update:categoryId', this.currentCategoryId);
       this.$emit('update:filterColors', this.currentColors);
+      console.log(this.filterColors);
     },
     clear() {
       this.currentColors.splice(0, this.currentColors.length);
@@ -210,6 +211,7 @@ export default {
       this.$emit('update:priceTo', 0);
       this.$emit('update:categoryId', 0);
       this.$emit('update:filterColors', this.currentColors);
+      console.log(this.filterColors);
     },
     colored(event) {
       if (event.srcElement.checked) {
@@ -221,6 +223,7 @@ export default {
           }
         });
       }
+      console.log(this.currentColors);
     },
   },
   watch: {

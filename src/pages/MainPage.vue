@@ -9,7 +9,7 @@
     </h1>
 
     <span class="content__info">
-      {{ products.length }} товара
+      {{ countProducts }} товаров
     </span>
 
   </div>
@@ -70,9 +70,9 @@ export default {
       if (this.filterCategoryId) {
         filteredProducts = filteredProducts.filter((product) => product.categoryId === this.filterCategoryId);
       }
-      if (this.filterColors.length > 0) {
-        filteredProducts = filteredProducts.filter((product) => product.colors.includes(this.filterColors));
-      }
+      // if (this.filterColors.length > 0) {
+      //   filteredProducts = filteredProducts.forEach((product) => product.colors.some((color) => this.filterColors.includes(color)));
+      // }
       return filteredProducts;
     },
   },
