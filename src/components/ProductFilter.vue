@@ -203,14 +203,13 @@ export default {
       this.$emit('update:priceTo', this.currentPriceTo);
       this.$emit('update:categoryId', this.currentCategoryId);
       this.$emit('update:filterColors', this.currentColors);
-      console.log(this.currentColors);
     },
     clear() {
+      this.currentColors.splice(0, this.currentColors.length);
       this.$emit('update:priceFrom', 0);
       this.$emit('update:priceTo', 0);
       this.$emit('update:categoryId', 0);
       this.$emit('update:filterColors', this.currentColors);
-      console.log(this.currentColors);
     },
     colored(event) {
       if (event.srcElement.checked) {
