@@ -42,7 +42,7 @@
 
           <li class="colors__item">
             <label class="colors__label" for="color1">
-              <input @input="colored($event)" class="colors__radio sr-only" id="color1" type="checkbox" name="color" value="#73B6EA">
+              <input class="colors__radio sr-only" id="color1" type="radio" name="color" v-model="currentColor" value="#73B6EA">
               <span class="colors__value" style="background-color: #73B6EA;">
               </span>
             </label>
@@ -50,7 +50,7 @@
 
           <li class="colors__item">
             <label class="colors__label" for="color2">
-              <input @input="colored($event)" class="colors__radio sr-only" id="color2" type="checkbox" name="color" value="#FFBE15">
+              <input class="colors__radio sr-only" id="color2" type="radio" name="color" v-model="currentColor" value="#FFBE15">
               <span class="colors__value" style="background-color: #FFBE15;">
               </span>
             </label>
@@ -58,35 +58,35 @@
 
           <li class="colors__item">
             <label class="colors__label" for="color3">
-              <input @input="colored($event)" class="colors__radio sr-only" id="color3" type="checkbox" name="color" value="#939393">
+              <input class="colors__radio sr-only" id="color3" type="radio" name="color" v-model="currentColor" value="#939393">
               <span class="colors__value" style="background-color: #939393;">
             </span></label>
           </li>
 
           <li class="colors__item">
             <label class="colors__label" for="color4">
-              <input @input="colored($event)" class="colors__radio sr-only" id="color4" type="checkbox" name="color" value="#8BE000">
+              <input class="colors__radio sr-only" id="color4" type="radio" name="color" v-model="currentColor" value="#8BE000">
               <span class="colors__value" style="background-color: #8BE000;">
             </span></label>
           </li>
 
           <li class="colors__item">
             <label class="colors__label" for="color5">
-              <input @input="colored($event)" class="colors__radio sr-only" id="color5" type="checkbox" name="color" value="#FF6B00">
+              <input class="colors__radio sr-only" id="color5" type="radio" name="color" v-model="currentColor" value="#FF6B00">
               <span class="colors__value" style="background-color: #FF6B00;">
             </span></label>
           </li>
 
           <li class="colors__item">
             <label class="colors__label" for="color6">
-              <input @input="colored($event)" class="colors__radio sr-only" id="color6" type="checkbox" name="color" value="#FFF">
+              <input class="colors__radio sr-only" id="color6" type="radio" name="color" v-model="currentColor" value="#FFF">
               <span class="colors__value" style="background-color: #FFF;">
             </span></label>
           </li>
 
           <li class="colors__item">
             <label class="colors__label" for="color7">
-              <input @input="colored($event)" class="colors__radio sr-only" id="color7" type="checkbox" name="color" value="#000">
+              <input class="colors__radio sr-only" id="color7" type="radio" name="color" v-model="currentColor" value="#000">
               <span class="colors__value" style="background-color: #000;">
             </span></label>
           </li>
@@ -188,10 +188,10 @@ export default {
       currentPriceFrom: 0,
       currentPriceTo: 0,
       currentCategoryId: 0,
-      currentColors: [],
+      currentColor: '',
     };
   },
-  props: ['priceFrom', 'priceTo', 'categoryId', 'filterColors'],
+  props: ['priceFrom', 'priceTo', 'categoryId', 'filterColor', 'page'],
   computed: {
     categories() {
       return categories;
@@ -202,28 +202,14 @@ export default {
       this.$emit('update:priceFrom', this.currentPriceFrom);
       this.$emit('update:priceTo', this.currentPriceTo);
       this.$emit('update:categoryId', this.currentCategoryId);
-      this.$emit('update:filterColors', this.currentColors);
-      console.log(this.filterColors);
+      this.$emit('update:filterColor', this.currentColor);
     },
     clear() {
-      this.currentColors.splice(0, this.currentColors.length);
+      this.$emit('update:page', 1);
       this.$emit('update:priceFrom', 0);
       this.$emit('update:priceTo', 0);
       this.$emit('update:categoryId', 0);
-      this.$emit('update:filterColors', this.currentColors);
-      console.log(this.filterColors);
-    },
-    colored(event) {
-      if (event.srcElement.checked) {
-        this.currentColors.push(event.target.defaultValue);
-      } else {
-        this.currentColors.forEach((color, i) => {
-          if (color === event.target.defaultValue) {
-            this.currentColors.splice(i, 1);
-          }
-        });
-      }
-      console.log(this.currentColors);
+      this.$emit('update:filterColor', '');
     },
   },
   watch: {
@@ -236,8 +222,8 @@ export default {
     categoryId(value) {
       this.currentCategoryId = value;
     },
-    filterColors(value) {
-      this.currentColors = value;
+    filterColor(value) {
+      this.currentColor = value;
     },
   },
 };
