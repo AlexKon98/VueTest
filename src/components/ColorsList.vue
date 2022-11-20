@@ -1,6 +1,6 @@
 <template>
 
-  <ul class="colors colors--black">
+  <ul class="colors" :class="{'colors--black': black}">
 
     <li class="colors__item">
       <label class="colors__label" :for="product.id+'_'+'blue'">
@@ -38,7 +38,7 @@ export default {
       color: '#73B6EA',
     };
   },
-  props: ['product'],
+  props: ['product', 'black'],
 };
 </script>
 
