@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
   <component :is="currentPageComponent" :page-params="currentPageParams"/>
 </template>

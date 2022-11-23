@@ -1,3 +1,4 @@
+/* eslint-disable */
 import eventBus from '@/eventBus';
 
 export default function gotoPage(pageName, pageParams) {

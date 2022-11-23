@@ -1,4 +1,5 @@
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
+<!-- eslint-disable -->
 <template>
 
    <ul class="catalog__pagination pagination">

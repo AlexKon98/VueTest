@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <template>
 
   <ul class="colors" :class="{'colors--black': black}">

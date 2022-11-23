@@ -1,3 +1,4 @@
+<!-- eslint-disable -->
 <!-- eslint-disable vuejs-accessibility/label-has-for -->
 <!-- eslint-disable vuejs-accessibility/form-control-has-label -->
 <!-- eslint-disable vuejs-accessibility/click-events-have-key-events -->
