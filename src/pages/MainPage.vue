@@ -1,4 +1,3 @@
-<!-- eslint-disable -->
 <template>
 
   <main class="content container">

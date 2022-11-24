@@ -1,4 +1,3 @@
-<!-- eslint-disable -->
 <template>
 
   <ul class="catalog__list">
