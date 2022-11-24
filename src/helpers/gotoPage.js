@@ -1,6 +1,6 @@
 /* eslint-disable */
 import eventBus from '@/eventBus';
 
-export default function gotoPage(pageName, pageParams) {
-  eventBus.$emit('gotoPage', pageName, pageParams);
+export default function gotoPage(pageParams) {
+  eventBus.$emit('gotoPage', pageParams);
 }

@@ -45,7 +45,7 @@ export default {
     return {
       filterPriceFrom: 0,
       filterPriceTo: 0,
-      filterCategoryId: 0,
+      filterCategoryId: +this.$route.params.id || 0,
       filterColor: '',
 
       page: 1,

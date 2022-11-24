@@ -27,7 +27,7 @@
         <legend class="form__legend">Категория</legend>
 
         <label class="form__label form__label--select" for="category">
-          <select class="form__select" type="text" name="category" id="category" v-model.number="currentCategoryId">
+          <select class="form__select" type="text" name="category" id="category" v-model.number="categoryId">
             <option value="0">Все категории</option>
             <option :value="category.id" v-for="category in categories" :key="category.id">{{ category.title }}</option>
           </select>
@@ -188,7 +188,7 @@ export default {
     return {
       currentPriceFrom: 0,
       currentPriceTo: 0,
-      currentCategoryId: 0,
+      currentCategoryId: this.categoryId || 0,
       currentColor: '',
     };
   },
