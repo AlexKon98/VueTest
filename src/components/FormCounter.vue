@@ -7,7 +7,7 @@
       </svg>
     </button>
 
-    <input type="number" v-model.number="count" name="count" class="input-counter">
+    <input type="text" v-model.number="count" name="count" id="input-counter">
 
     <button type="button" aria-label="Добавить один товар" @click="incr">
       <svg width="12" height="12" fill="currentColor">
@@ -33,10 +33,3 @@ export default {
   },
 }
 </script>
-
-
-<style>
-  .input-counter {
-    pointer-events: none;
-  }
-</style>
