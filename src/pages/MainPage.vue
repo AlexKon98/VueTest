@@ -58,7 +58,7 @@ export default {
     products() {
       return this.productsData
       ? this.productsData.items.map((product) => {
-        return{
+        return {
           ...product,
           image: product.image.file.url,
         }

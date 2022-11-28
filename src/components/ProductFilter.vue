@@ -158,7 +158,9 @@ export default {
       return this.categoriesData ? this.categoriesData.items : [];
     },
     colors() {
-      return this.colorsData ? this.colorsData.items : [];
+      return this.colorsData
+      ? this.colorsData.items.filter(item => !item.title.includes('<'))
+      : [];
     }
   },
   methods: {
