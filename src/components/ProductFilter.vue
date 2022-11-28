@@ -26,7 +26,7 @@
         <legend class="form__legend">Категория</legend>
 
         <label class="form__label form__label--select" for="category">
-          <select class="form__select" type="text" name="category" id="category" v-model.number="categoryId">
+          <select class="form__select" type="text" name="category" id="category" v-model.number="currentCategoryId">
             <option value="0">Все категории</option>
             <option :value="category.id" v-for="category in categories" :key="category.id">{{ category.title }}</option>
           </select>
@@ -40,55 +40,12 @@
 
         <ul class="colors">
 
-          <li class="colors__item">
-            <label class="colors__label" for="color1">
-              <input class="colors__radio sr-only" id="color1" type="radio" name="color" v-model="currentColor" value="#73B6EA">
-              <span class="colors__value" style="background-color: #73B6EA;">
+          <li class="colors__item" v-for="color in colors" :key="color.id">
+            <label class="colors__label" :for="'color' + color.id">
+              <input class="colors__radio sr-only" :id="'color' + color.id" type="radio" name="color" v-model="currentColor" :value="color.id">
+              <span class="colors__value" :style="{'background-color': color.code}">
               </span>
             </label>
-          </li>
-
-          <li class="colors__item">
-            <label class="colors__label" for="color2">
-              <input class="colors__radio sr-only" id="color2" type="radio" name="color" v-model="currentColor" value="#FFBE15">
-              <span class="colors__value" style="background-color: #FFBE15;">
-              </span>
-            </label>
-          </li>
-
-          <li class="colors__item">
-            <label class="colors__label" for="color3">
-              <input class="colors__radio sr-only" id="color3" type="radio" name="color" v-model="currentColor" value="#939393">
-              <span class="colors__value" style="background-color: #939393;">
-            </span></label>
-          </li>
-
-          <li class="colors__item">
-            <label class="colors__label" for="color4">
-              <input class="colors__radio sr-only" id="color4" type="radio" name="color" v-model="currentColor" value="#8BE000">
-              <span class="colors__value" style="background-color: #8BE000;">
-            </span></label>
-          </li>
-
-          <li class="colors__item">
-            <label class="colors__label" for="color5">
-              <input class="colors__radio sr-only" id="color5" type="radio" name="color" v-model="currentColor" value="#FF6B00">
-              <span class="colors__value" style="background-color: #FF6B00;">
-            </span></label>
-          </li>
-
-          <li class="colors__item">
-            <label class="colors__label" for="color6">
-              <input class="colors__radio sr-only" id="color6" type="radio" name="color" v-model="currentColor" value="#FFF">
-              <span class="colors__value" style="background-color: #FFF;">
-            </span></label>
-          </li>
-
-          <li class="colors__item">
-            <label class="colors__label" for="color7">
-              <input class="colors__radio sr-only" id="color7" type="radio" name="color" v-model="currentColor" value="#000">
-              <span class="colors__value" style="background-color: #000;">
-            </span></label>
           </li>
 
         </ul>
@@ -180,7 +137,8 @@
 </template>
 
 <script>
-import categories from '../data/categories';
+import axios from 'axios';
+import { API_BASE_URL } from '@/config';
 
 export default {
   data() {
@@ -188,20 +146,26 @@ export default {
       currentPriceFrom: 0,
       currentPriceTo: 0,
       currentCategoryId: this.categoryId || 0,
-      currentColor: '',
+      currentColor: 0,
+
+      colorsData: null,
+      categoriesData: null,
     };
   },
   props: ['priceFrom', 'priceTo', 'categoryId', 'filterColor', 'page'],
   computed: {
     categories() {
-      return categories;
+      return this.categoriesData ? this.categoriesData.items : [];
     },
+    colors() {
+      return this.colorsData ? this.colorsData.items : [];
+    }
   },
   methods: {
     submit() {
       this.$emit('update:priceFrom', this.currentPriceFrom);
       this.$emit('update:priceTo', this.currentPriceTo);
-      this.$emit('update:categoryId', this.currentCategoryId);
+      this.$emit('update:categoryId', +this.currentCategoryId);
       this.$emit('update:filterColor', this.currentColor);
     },
     clear() {
@@ -209,8 +173,22 @@ export default {
       this.$emit('update:priceFrom', 0);
       this.$emit('update:priceTo', 0);
       this.$emit('update:categoryId', 0);
-      this.$emit('update:filterColor', '');
+      this.$emit('update:filterColor', 0);
     },
+    loadCategories() {
+      axios
+        .get(API_BASE_URL + '/api/productCategories')
+        .then(res => this.categoriesData = res.data);
+    },
+    loadColors() {
+      axios
+        .get(API_BASE_URL + '/api/colors')
+        .then(res => this.colorsData = res.data);
+    }
+  },
+  created() {
+    this.loadCategories();
+    this.loadColors();
   },
   watch: {
     priceFrom(value) {

@@ -1,19 +1,19 @@
 <template>
   <li class="cart__item product">
-    <div class="product__pic">
+    <router-link :to="{name: 'product', params: {id: item.productId}}" class="product__pic">
       <img :src="item.product.image" width="120" height="120" :alt="item.product.title">
-    </div>
-    <h3 class="product__title">
+    </router-link>
+    <router-link :to="{name: 'product', params: {id: item.productId}}" class="product__title">
       {{ item.product.title }}
-    </h3>
+    </router-link>
 
     <!-- <p class="product__info">
       Объем: <span>128 GB</span>
     </p> -->
 
-    <span class="product__code">
+    <router-link :to="{name: 'main', params: {id: item.product.categoryId}}" class="product__code">
       Артикул: {{ item.product.id }}
-    </span>
+    </router-link>
 
     <div class="product__counter form__counter">
       <button type="button" aria-label="Убрать один товар" @click.prevent="dec(item.productId)">
@@ -85,5 +85,10 @@ export default {
 <style>
   button {
     cursor: pointer;
+  }
+
+  .product__title {
+    color: #222;
+    font-weight: 600;
   }
 </style>

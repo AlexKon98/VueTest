@@ -18,7 +18,11 @@
         Корзина
       </h1>
       <span class="content__info">
-        {{ products.length }} товара
+        <span>{{ products.length }} </span>
+        <span v-if="products.length < 1">товаров</span>
+        <span v-else-if="products.length === 1">товар</span>
+        <span v-else-if="products.length > 0 && products.length < 5">товарa</span>
+        <span v-else>товаров</span>
       </span>
     </div>
 

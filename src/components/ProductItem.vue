@@ -35,3 +35,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.catalog__pic img {
+  object-fit: contain;
+}
+</style>

@@ -33,10 +33,11 @@
 </template>
 
 <script>
-import products from '@/data/products';
 import ProductList from '@/components/ProductList.vue';
 import BasePagination from '@/components/BasePagination.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
+import { API_BASE_URL } from '@/config';
+import axios from 'axios';
 
 export default {
   components: { ProductList, BasePagination, ProductFilter },
@@ -45,36 +46,67 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategoryId: +this.$route.params.id || 0,
-      filterColor: '',
+      filterColor: 0,
 
       page: 1,
-      productsPerPage: 3,
+      productsPerPage: 6,
+
+      productsData: null,
     };
   },
   computed: {
     products() {
-      const offset = (this.page - 1) * this.productsPerPage;
-      return this.filteredProducts.slice(offset, offset + this.productsPerPage);
+      return this.productsData
+      ? this.productsData.items.map((product) => {
+        return{
+          ...product,
+          image: product.image.file.url,
+        }
+      })
+      : [];
     },
     countProducts() {
-      return this.filteredProducts.length;
+      return this.productsData ? this.productsData.pagination.total : 0;
     },
-    filteredProducts() {
-      let filteredProducts = products;
-      if (this.filterPriceFrom > 0) {
-        filteredProducts = filteredProducts.filter((product) => product.price > this.filterPriceFrom);
-      }
-      if (this.filterPriceTo > 0) {
-        filteredProducts = filteredProducts.filter((product) => product.price < this.filterPriceTo);
-      }
-      if (this.filterCategoryId) {
-        filteredProducts = filteredProducts.filter((product) => product.categoryId === this.filterCategoryId);
-      }
-      if (this.filterColor !== '') {
-        filteredProducts = filteredProducts.filter((product) => product.colors.includes(this.filterColor));
-      }
-      return filteredProducts;
+  },
+  methods: {
+    loadProducts() {
+      clearTimeout(this.loadProductsTimer);
+      this.loadProductsTimer = setTimeout(() => {
+        axios
+        .get(API_BASE_URL + '/api/products', {
+          params: {
+            page: this.page,
+            limit: this.productsPerPage,
+            categoryId: this.filterCategoryId,
+            minPrice: this.filterPriceFrom,
+            maxPrice: this.filterPriceTo,
+            colorId: this.filterColor,
+          }
+        })
+        .then(res => this.productsData = res.data);
+      }, 0);
+    }
+  },
+  watch: {
+    page() {
+      this.loadProducts();
     },
+    filterPriceFrom() {
+      this.loadProducts();
+    },
+    filterPriceTo() {
+      this.loadProducts();
+    },
+    filterCategoryId() {
+      this.loadProducts();
+    },
+    filterColor() {
+      this.loadProducts();
+    },
+  },
+  created() {
+    this.loadProducts();
   },
 };
 </script>
