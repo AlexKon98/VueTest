@@ -208,3 +208,10 @@ export default {
   },
 };
 </script>
+
+
+<style>
+#category {
+  cursor: pointer;
+}
+</style>

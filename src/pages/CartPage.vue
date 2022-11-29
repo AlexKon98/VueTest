@@ -19,17 +19,18 @@
       </h1>
       <span class="content__info">
         <span>{{ products.length }} </span>
-        <span v-if="products.length < 1">товаров</span>
-        <span v-else-if="products.length === 1">товар</span>
-        <span v-else-if="products.length > 0 && products.length < 5">товарa</span>
-        <span v-else>товаров</span>
+        <span >товаров</span>
       </span>
     </div>
 
     <section class="cart">
       <form class="cart__form form" action="#" method="POST">
         <div class="cart__field">
-          <ul class="cart__list">
+          <div class="loader__flex-spec" v-if="products.length <= 0">
+            <span>Идёт загрузка товаров</span>
+            <img src="https://shop.marideco.ru/bitrix/templates/newshop/img/lazyimg-loader.gif" alt="" />
+          </div>
+          <ul class="cart__list" v-if="products.length > 0">
             <CartItem v-for="item in products" :key="item.productId" :item="item" />
           </ul>
         </div>
@@ -53,8 +54,8 @@
 
 <script>
 import numberFormat from '@/helpers/numberFormat';
-import FormCounter from '@/components/FormCounter.vue';
 import { mapGetters } from 'vuex';
+import FormCounter from '@/components/FormCounter.vue';
 import CartItem from '@/components/CartItem.vue';
 
 export default {

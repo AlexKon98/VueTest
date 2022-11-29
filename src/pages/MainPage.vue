@@ -20,7 +20,21 @@
 
     <section class="catalog">
 
-      <ProductList :products="products"/>
+      <div class="loader__flex-spec" v-if="products.length < 1">
+        <span>Товаров с такими параметрами нет</span>
+      </div>
+
+      <div class="loader__flex-spec" v-if="productsLoading">
+        <span>Загрузка</span>
+        <img src="https://shop.marideco.ru/bitrix/templates/newshop/img/lazyimg-loader.gif" alt="">
+      </div>
+
+      <div class="loader__flex" v-if="productsLoadingFailed">
+        <span>Произошла ошибка при загрузке товаров...</span>
+        <button class="button--primery spec" @click.prevent="loadProducts">Попробовать ещё раз</button>
+      </div>
+
+      <ProductList v-else-if="!productsLoading" :products="products"/>
 
       <BasePagination v-model="page" :count="countProducts" :per-page="productsPerPage"/>
 
@@ -47,11 +61,11 @@ export default {
       filterPriceTo: 0,
       filterCategoryId: +this.$route.params.id || 0,
       filterColor: 0,
-
       page: 1,
       productsPerPage: 6,
-
       productsData: null,
+      productsLoading: true,
+      productsLoadingFailed: false,
     };
   },
   computed: {
@@ -71,6 +85,8 @@ export default {
   },
   methods: {
     loadProducts() {
+      this.productsLoading = true;
+      this.productsLoadingFailed = false;
       clearTimeout(this.loadProductsTimer);
       this.loadProductsTimer = setTimeout(() => {
         axios
@@ -84,7 +100,9 @@ export default {
             colorId: this.filterColor,
           }
         })
-        .then(res => this.productsData = res.data);
+        .then(res => this.productsData = res.data)
+        .catch(() => this.productsLoadingFailed = true)
+        .then(() => this.productsLoading = false);
       }, 0);
     }
   },
@@ -110,3 +128,36 @@ export default {
   },
 };
 </script>
+
+
+<style>
+.loader__flex {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.loader__flex span {
+  font-family: "PressStart";
+  font-size: 15px;
+  padding-bottom: 10px;
+}
+
+.loader__flex-spec {
+  display: flex;
+  align-items: center;
+  font-family: "PressStart";
+  font-size: 25px;
+  line-height: 35px;
+}
+
+.loader__flex-spec img {
+  max-width: 30px;
+  margin-left: 10px;
+}
+
+.button--primery.spec:hover {
+  background-color: #222;
+  border-color: #222;
+}
+</style>

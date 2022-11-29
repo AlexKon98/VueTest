@@ -1,7 +1,7 @@
 <template>
   <li class="cart__item product">
     <router-link :to="{name: 'product', params: {id: item.productId}}" class="product__pic">
-      <img :src="item.product.image" width="120" height="120" :alt="item.product.title">
+      <img :src="item.product.image.file.url" width="120" height="120" :alt="item.product.title">
     </router-link>
     <router-link :to="{name: 'product', params: {id: item.productId}}" class="product__title">
       {{ item.product.title }}
@@ -11,25 +11,11 @@
       Объем: <span>128 GB</span>
     </p> -->
 
-    <router-link :to="{name: 'main', params: {id: item.product.categoryId}}" class="product__code">
+    <span class="product__code">
       Артикул: {{ item.product.id }}
-    </router-link>
+    </span>
 
-    <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар" @click.prevent="dec(item.productId)">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-minus"></use>
-        </svg>
-      </button>
-
-      <input type="text" v-model.number="amount" name="count">
-
-      <button type="button" aria-label="Добавить один товар" @click.prevent="inc">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-plus"></use>
-        </svg>
-      </button>
-    </div>
+    <FormCounter class="product__counter" :count.sync="amount" />
 
     <b class="product__price">
       {{ (item.amount * item.product.price) | numberFormat }} ₽
@@ -47,7 +33,7 @@
 <script>
 import numberFormat from '@/helpers/numberFormat';
 import FormCounter from './FormCounter.vue';
-import { mapMutations } from 'vuex';
+// import { mapActions } from 'vuex';
 
 export default {
     props: ['item'],
@@ -57,25 +43,17 @@ export default {
           return this.item.amount;
         },
         set(value) {
-          this.$store.commit('updateCardProductAmount', {productId: this.item.productId, amount: value});
+          this.$store.dispatch('updateCartProductAmount', {productId: this.item.productId, amount: value});
         },
       },
     },
     methods: {
-      ...mapMutations({deleteProduct: 'deleteCartProduct'}),
-      inc() {
-        this.amount++;
-      },
-      dec(value) {
-        if(this.amount > 1) {
-          this.amount--;
-        } else {
-          this.$store.commit('deleteCartProduct', value);
-        }
+      deleteProduct(id) {
+        this.$store.dispatch('removeCartProduct', id);
       },
     },
     filters: {
-        numberFormat,
+      numberFormat,
     },
     components: { FormCounter },
 }
