@@ -106,12 +106,12 @@ export default new Vuex.Store({
           userAccessKey: context.state.userAccessKey,
         },
       })
-      .then(res => {
-        context.commit('updateCartProductsData', res.data.items)
-      })
-      .catch(() => {
-        context.commit('syncCartProducts');
-      });
+        .then(res => {
+          context.commit('updateCartProductsData', res.data.items);
+        })
+        .catch(() => {
+          context.commit('syncCartProducts');
+        });
     },
   },
 });

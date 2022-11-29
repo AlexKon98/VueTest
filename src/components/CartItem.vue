@@ -33,7 +33,6 @@
 <script>
 import numberFormat from '@/helpers/numberFormat';
 import FormCounter from './FormCounter.vue';
-// import { mapActions } from 'vuex';
 
 export default {
     props: ['item'],
