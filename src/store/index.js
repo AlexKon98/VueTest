@@ -100,11 +100,12 @@ export default new Vuex.Store({
     },
     removeCartProduct(context, productId) {
       return axios.delete(API_BASE_URL + '/api/baskets/products', {
-        productId: productId,
-      }, {
         params: {
           userAccessKey: context.state.userAccessKey,
         },
+        data: {
+          productId: productId,
+        }
       })
         .then(res => {
           context.commit('updateCartProductsData', res.data.items);

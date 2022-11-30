@@ -55,6 +55,9 @@ export default {
       numberFormat,
     },
     components: { FormCounter },
+    created() {
+      console.log(this.item);
+    },
 }
 </script>
 
